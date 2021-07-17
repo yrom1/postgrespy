@@ -15,3 +15,4 @@ a couple things I noticed:
 - if you don't give the image a tag, it has `<none>` when you `docker images`
 - `-d` is almost always nice, unless you just wanna run a docker container once
 - since I'm just messing around, I use the no password `...AUTH_METHOD...`
+- also, this didn't work for postgres 13... the python package is for 12 and I don't think there's a 13 one although i could be wrong
