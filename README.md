@@ -1,4 +1,4 @@
-# postgresql-plpython3
+# postgresql-plpython3u
 
 Docker image for PostgreSQL 12.7 with plpython3u support
 
