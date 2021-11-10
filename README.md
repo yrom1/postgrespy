@@ -1,18 +1,45 @@
 # postgresql-plpython3u-docker
 
-Docker image for PostgreSQL 12.7 with plpython3u support
+Docker image for PostgreSQL 12.7 with plpython3u support.
 
-First time getting a non-trival docker running:
+The image is currently on dockerhub:
+https://hub.docker.com/repository/docker/yrom1/postgres12.7-plpython3.7.3
+
+Pull or build image with Dockerfile:
 
 ```
-docker build -t postgrespy12 .
-docker run -de POSTGRES_HOST_AUTH_METHOD=trust postgrespy12
-docker exec -it fd154d4bd47b bash
+docker build -t postgrespy .
+docker pull -t postgrespy yrom1/postgres12.7-plpython3.7.3
 ```
 
-a couple things I noticed:
+Then run it, for local testing `trust` mode can be used:
 
-- if you don't give the image a tag, it has `<none>` when you `docker images`
-- `-d` is almost always nice, unless you just wanna run a docker container once
-- since I'm just messing around, I use the no password `...AUTH_METHOD...`
-- also, this didn't work for postgres 13... the python package is for 12 and I don't think there's a 13 one although i could be wrong
+```
+docker run -de POSTGRES_HOST_AUTH_METHOD=trust --name postgrespy yrom1/postgres12.7-plpython3.7.3
+docker exec -it postgrespy bash
+```
+
+Once in bash, one can test the `CREATE EXTENSION plpython3u;` has worked with the example PL/Python3u example function in `py3_func_test.sql`:
+
+```
+root@1dbff12ed72e:/# su - postgres
+postgres@1dbff12ed72e:~$ psql
+psql (12.7 (Debian 12.7-1.pgdg100+1), server 12.8 (Debian 12.8-1.pgdg100+1))
+Type "help" for help.
+
+postgres=# CREATE FUNCTION pymax (a integer, b integer)
+postgres-#   RETURNS integer
+postgres-# AS $$
+postgres$#   if a > b:
+postgres$#     return a
+postgres$#   return b
+postgres$# $$ LANGUAGE plpython3u;
+CREATE FUNCTION
+postgres=# SELECT pymax(1, 2);
+ pymax 
+-------
+     2
+(1 row)
+
+postgres=# 
+```
