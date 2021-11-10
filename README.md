@@ -5,14 +5,14 @@ Docker image for PostgreSQL 12.7 with plpython3u support.
 The image is currently on dockerhub:
 https://hub.docker.com/repository/docker/yrom1/postgres12.7-plpython3.7.3
 
-Pull or build image with Dockerfile:
+Pull image, or build image with Dockerfile:
 
 ```
-docker build -t postgrespy .
-docker pull -t postgrespy yrom1/postgres12.7-plpython3.7.3
+docker build -t yrom1/postgres12.7-plpython3.7.3 .
+docker pull yrom1/postgres12.7-plpython3.7.3
 ```
 
-Then run it, for local testing `trust` mode can be used:
+Then run it. For local testing `trust` mode environment variable can be used:
 
 ```
 docker run -de POSTGRES_HOST_AUTH_METHOD=trust --name postgrespy yrom1/postgres12.7-plpython3.7.3
